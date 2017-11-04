@@ -26,8 +26,6 @@ const http = require("http");
 const fs = require("fs");
 
 const server = http.createServer(function(request, response) {
-  console.log(request.url);
-
   switch(request.url) {
     case "/":
       response.writeHead(200, {"Content-Type" : "text/html"});
