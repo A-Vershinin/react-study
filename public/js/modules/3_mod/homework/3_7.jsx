@@ -1,7 +1,6 @@
-// import App from "./modules/2_mod/2_1";
 /*
- Модифицируйте предыдущую задачу так, чтобы текстом кнопки всегда был следующий цвет, в который покрасится абзац.
-
+В стейте дан массив с юзерами ['Коля', 'Вася', 'Петя']. Сделайте кнопку, по нажатию на которую этот массив
+выведется на экран в виде списка ul.
 */
 class App extends React.Component {
 	constructor() {
@@ -30,10 +29,4 @@ class App extends React.Component {
 		);
 	}
 }
-
-ReactDOM.render(
-	<App/>,
-	document.querySelector("#app")
-);
-
-
+export default App;
