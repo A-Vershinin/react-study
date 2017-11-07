@@ -1,4 +1,3 @@
-// import App from "./modules/2_mod/2_1";
 /*
 Модифицируйте предыдущую задачу так, чтобы появилась еще одна колонка со ссылками для удаления.
 Нажатие на любую из ссылок должно приводить к удалению соответствующего юзера из таблицы.
@@ -13,7 +12,6 @@ class App extends React.Component {
 				{name: 'Петя', age: 32, salary: 600},
 			]
 		};
-		// this.removeItem = this.removeItem.bind(this);
 	}
 
 	removeItem(index) {
@@ -50,10 +48,4 @@ class App extends React.Component {
 		);
 	}
 }
-
-ReactDOM.render(
-	<App/>,
-	document.querySelector("#app")
-);
-
-
+export default App;
