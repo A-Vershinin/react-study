@@ -6,12 +6,12 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {items: ['Коля', 'Вася', 'Петя', 'Иван', 'Дима']};
-		this.addItem = this.addItem.bind(this);
 	}
 
-	addItem() {
-		this.state.items.push("Пункт");
-		this.setState({items: this.state.items});
+	addItem = () => {
+		const numbers = [...this.state.items];
+		numbers.push('пункт');
+		this.setState({items: numbers});
 	}
 
 	render() {
