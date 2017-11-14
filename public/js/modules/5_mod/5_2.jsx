@@ -20,7 +20,7 @@ class App extends React.Component {
 		return (
 			<div className="container">
 				<p>текст инпута: {this.state.value}</p>
-				<input type={"text"}
+				<input type="text"
 				       value={this.state.value}
 				       onChange={this.handleChange}
 				/>
