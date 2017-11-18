@@ -8,61 +8,58 @@ class App extends React.Component {
 		super();
 		this.state = {
 			users: [
-				{name: "Вася", surname: "Пупкин", salary: 120},
-				{name: "Коля", surname: "Иванов", salary: 130},
-				{name: "Петя", surname: "Петров", salary: 140},
+				{name: "Вася", salary: 120},
+				{name: "Коля", salary: 330},
+				{name: "Аня", salary: 140},
+				{name: "Женя", salary: 75},
 			]
 		}};
 
-	sortGrid(table, colNum, type) {
-		let tbody = table.getElementsByTagName('tbody')[0];
-		let rowsArray = [].slice.call(tbody.rows); 		// массив из TR
+	getInnerArr(colNum) {
+		let innerArray = this.state.users.map((item) => {
+			if (colNum === 0) {
+				return item.name;
+			}
+			if (colNum === 1) {
+				return item.salary;
+			}
+		});
+		return innerArray;
+	}
 
-		let compare; // функцию сравнения в зависимости от типа
+	sortGrid(arr, type) {
+		let compare;
 		switch (type) {
 			case 'number':
 				compare = (rowA, rowB) => {
-					return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
+					return rowA - rowB;
 				};
 				break;
 			case 'string':
 				compare = (rowA, rowB) => {
-					return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML;
+					return rowA.length > rowB.length;
 				};
 				break;
 		}
-		rowsArray.sort(compare);
-		console.log(rowsArray);
-		// Убрать tbody из большого DOM документа для лучшей производительности
-		// table.removeChild(tbody);
-
-		// добавить результат в нужном порядке в TBODY
-		// они автоматически будут убраны со старых мест и вставлены в правильном порядке
-		// for (let i = 0; i < rowsArray.length; i++) {
-		// 	tbody.appendChild(rowsArray[i]);
-		// }
-		// tbody.appendChild(tbody);
+		return arr.sort(compare);
 	}
 
 	handleTableClick(event) {
 		const index = event.target.cellIndex;
 		const type = event.target.getAttribute('data-type');
-		const table = event.target.parentElement.parentElement.parentElement;
-
 		if (event.target.tagName != "TH") return false;
-		this.sortGrid(table, index, type);
-		this.setState({users: this.state.users});
+
+		let rowsArray = this.getInnerArr(index);
+		let arr = this.sortGrid(rowsArray, type);
+
+		console.log(arr);
+		this.setState({users: arr});
 	}
 	render() {
 
-		const tbody = document.getElementsByTagName("tbody");
-
-
 		const item = this.state.users.map((item, index) => {
-			return (
-				<tr key={index} style={{outline: "1px solid black"}}>
+			return (<tr key={index} style={{outline: "1px solid black"}}>
 					<td>{item.name}</td>
-					<td>{item.surname}</td>
 					<td>{item.salary}</td>
 				</tr>
 			)
@@ -74,7 +71,6 @@ class App extends React.Component {
 					<thead>
 					<tr style={{outline: "1px solid black"}}>
 						<th data-type="string" style={{display: "block", marginRight: "20px"}}>Имя</th>
-						<th data-type="string">Фамилия</th>
 						<th data-type="number">Зарплата</th>
 					</tr>
 					</thead>

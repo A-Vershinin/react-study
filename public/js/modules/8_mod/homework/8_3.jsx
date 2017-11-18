@@ -1,9 +1,8 @@
 /*
-Модифицируйте предыдущую задачу так, чтобы появился еще и один отдельный компонент для добавления
-нового продукта в таблицу.
+Модифицируйте предыдущую задачу так, чтобы в таблице появилась еще одна колонка, в которой будут находиться чекбоксы.
+Изначально эти чекбоксы отмечены. Сделайте так, чтобы полная стоимость всех продуктов выводилась только для тех
+продуктов, у которых чекбокс отмечен.
 */
-// не доделал обнуление полей после сабмита в форме
-// спросить за названия методов при передаче в дочерний комп.
 class Total extends React.Component {
 	constructor(props) {
 		super(props);
@@ -19,35 +18,6 @@ class Total extends React.Component {
 
 		return (
 			<p>Полная стоимость всех продуктов: {producsAll} $</p>
-		)
-	}
-}
-
-class AddItem extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-	render() {
-		return (
-			<form onSubmit={this.props.createItem.bind(null)}
-			      style={{marginBottom: "30px", outline: "1px solid black", padding: "20px"}}>
-				<div>Форма добавления нового товара в таблицу</div>
-				<div>
-					<span style={{marginRight: "20px"}}>Имя</span>
-					<input type="text"  value={this.props.valueName} onChange={this.props.addInputName.bind(null)}/>
-				</div>
-				<div>
-					<span style={{marginRight: "20px"}}>Цена</span>
-					<input type="text" value={this.props.valuePrice}
-					       onChange={this.props.addInputPrice.bind(null)}/>
-				</div>
-				<div>
-					<span style={{marginRight: "20px"}}>Колличество</span>
-					<input type="text" value={this.props.valueQuantity}
-					       onChange={this.props.addInputQuantity.bind(null)}/>
-				</div>
-				<button type="submit">Добавить</button>
-			</form>
 		)
 	}
 }
@@ -94,8 +64,7 @@ class App extends React.Component {
 				{name: 'item3', price: 170, quantity: 25, checked: true},
 				{name: 'item4', price: 360, quantity: 17, checked: true},
 				{name: 'item5', price: 320, quantity: 8, checked: true},
-			],
-			forms: {valueName: "", valuePrice: "", valueQuantity: ""},
+			]
 		}
 	}
 
@@ -107,37 +76,6 @@ class App extends React.Component {
 		this.state.products[index]['checked'] = !this.state.products[index]['checked'];
 		this.setState({products: this.state.products});
 	}
-	handleInputNameChange(event) {
-		this.state.forms.valueName = event.target.value;
-		this.setState({products: this.state.products});
-	};
-	handleInputPriceChange(event) {
-		this.state.forms.valuePrice = event.target.value;
-		this.setState({products: this.state.products});
-	};
-	handleInputQuantityChange(event) {
-		this.state.forms.valueQuantity = event.target.value;
-		this.setState({products: this.state.products});
-	};
-
-	addItemInTable(event) {
-		event.preventDefault();
-		console.log(event.target);
-		let products = [...this.state.products];
-		let name = this.state.forms.valueName;
-		let price = this.state.forms.valuePrice;
-		let quantity = this.state.forms.valueQuantity;
-
-		products.push({
-			name: name,
-			price: price,
-			quantity: quantity,
-			checked: true
-		});
-
-		this.setState({products: products});
-		this.setState({valueName: "", valuePrice: "", valueQuantity: ""});
-	};
 
 	render() {
 
@@ -153,11 +91,6 @@ class App extends React.Component {
 		return (
 			<div className="container">
 				<p>Таблица</p>
-				<AddItem createItem={this.addItemInTable.bind(this)}
-				         addInputName={this.handleInputNameChange.bind(this)}
-				         addInputPrice={this.handleInputPriceChange.bind(this)}
-				         addInputQuantity={this.handleInputQuantityChange.bind(this)}
-				/>
 				<table>
 					<tbody>
 					<tr style={{outline: "1px solid black", display: "flex", justifyContent: "space-between"}}>
@@ -176,10 +109,4 @@ class App extends React.Component {
 		);
 	}
 }
-
-ReactDOM.render(
-	<App/>,
-	document.querySelector("#app")
-);
-
-
+export default App;
