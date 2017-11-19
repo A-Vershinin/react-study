@@ -67,7 +67,6 @@ class App extends React.Component {
 	}
 
 	render() {
-		const button = <button onClick={this.handleCkeckClick.bind(this)}>Сдать тест</button>;
 		const items = this.state.test.map((elem, index) => {
 			return (
 				<Item index={index} key={index} question={elem.question} answer={elem.answer} questAnswer={elem.questAnswer}
@@ -80,17 +79,10 @@ class App extends React.Component {
 			<div className="container">
 				<ul >
 					{items}
-					{button}
-					{/*<button onClick={this.handleCkeckClick.bind(this)}>Cдать тест</button>*/}
+					<button onClick={this.handleCkeckClick.bind(this)}>Cдать тест</button>
 				</ul>
 			</div>
 		);
 	}
 }
-
-ReactDOM.render(
-	<App/>,
-	document.querySelector("#app")
-);
-
-
+export default App;
