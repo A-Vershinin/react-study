@@ -28,7 +28,6 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			valueOption: "",
 			test: [
 				{
 					question: 'Вопрос 1',
@@ -40,6 +39,7 @@ class App extends React.Component {
 						'Ответ 5',
 					],
 					right: 3,
+					answer: ""
 				},
 				{
 					question: 'Вопрос 2',
@@ -50,91 +50,49 @@ class App extends React.Component {
 						'Ответ 4',
 						'Ответ 5',
 					],
-					right: 5,
+					right: 2,
+					answer: ""
 				},
 			]
 		};
 	}
 
-	// getInnerAnswers(arr) {
-	// 	const answers = arr.map((elem, index) => {
-	// 		if (this.state.valueOption == right) {
-	// 			var string = "green";
-	// 		} else {
-	// 			var string = "red";
-	// 		}
-	//
-	// 		console.log();
-	// 		return (
-	// 			<div key={index} style={{display: "inline-block" ,marginRight: "15px"}}>
-	// 				<input type="radio" value={elem} checked={this.state.valueOption == elem}
-	// 				       onChange={this.handleRadioChange} style={{marginRight: "10px"}} />
-	// 				<span>{elem}</span>
-	// 			</div>
-	// 		)
-	// 	});
-	// 	return answers;
-	// }
 	handleRadioChange(index, event) {
-		// this.state.test[index]['answers'] = event.target.value;
-		this.setState({valueOption: event.target.value})
+		console.log(this.state.test[index]);
+		this.state.test[index]['inputValue'] = event.target.value;
+		this.state.test[index]['answer'] = event.target.value;
+		this.setState({answers: this.state.test})
 	};
 
-	// formHandleSubmit = (event) => {
-	// 	event.preventDefault();
-	// 	const value1 = this.state.selectCur[parseInt(this.state.valueSelect1) || 0];
-	// 	const value2 = this.state.selectCur[parseInt(this.state.valueSelect2) || 0];
-	// 	// обмен слево направо
-	// 	const cur1 = (parseFloat(this.state.valueInput) * parseFloat(this.state.course[0][value2]));
-	// 	const cur2 = (parseFloat(this.state.course[0][value1]));
-	// 	this.state.result = (cur1 / cur2).toFixed(2);
-	// 	this.setState({result: this.state.result});
-	// };
-
 	render() {
+
 		const elem = this.state.test.map((item, index) => {
-			console.log(this.state.valueOption);
-			console.log(typeof this.state.valueOption);
-			console.log(typeof item.right);
-			if (this.state.valueOption === String(item.right)) {
+			if (item.answer == item.right) {
 				var string = "green";
-				console.log("внутри");
 			} else {
 				var string = "red";
 			}
 
-			// let answers = item.answers.map((elem, index) => {
-			// 	return <div key={index} style={{display: "inline-block" ,marginRight: "15px"}}>
-			// 		<input type="radio" value={elem} checked={this.state.valueOption == elem}
-			// 		       onChange={this.handleRadioChange} style={{marginRight: "10px"}} />
-			// 		<span>{elem}</span>
-			// 	</div>
-			// });
+			let answers = item.answers.map((elem, indexSecond) => {
+				return <div key={indexSecond} style={{display: "inline-block" ,marginRight: "15px"}}>
+					<input type="radio" value={indexSecond+1} checked={item.answer == indexSecond+1}
+					       onChange={this.handleRadioChange.bind(this, index)} style={{marginRight: "10px"}} />
+					<span>{elem}</span>
+				</div>
+			});
 
 			return <div key={index}>
-				<form>
-					<p className={string}>{item.question}</p>
-					{/*{answers}*/}
-
-					<div key={index} style={{display: "inline-block", marginRight: "15px"}}>
-						<input type="radio" value={"1"} checked={this.state.valueOption === "1"}
-						       onChange={this.handleRadioChange.bind(this, index)} style={{marginRight: "10px"}} />
-						<span>Ответ1</span>
-						<input type="radio" value={"2"} checked={this.state.valueOption === "2"}
-						       onChange={this.handleRadioChange.bind(this, index)} style={{marginRight: "10px"}} />
-						<span>Ответ2</span>
-						<input type="radio" value={"3"} checked={this.state.valueOption === "3"}
-						       onChange={this.handleRadioChange.bind(this, index)} style={{marginRight: "10px"}} />
-						<span>Ответ3</span>
-					</div>
-				</form>
+				<p className={string}>{item.question}</p>
+				{answers}
+				<p>Вы выбрали: {item.answer}</p>
 			</div>
 		});
 
 		return (
 			<div className="container">
-				{elem}
-				<p>Вы выбрали: {this.state.valueOption}</p>
+				<form>
+					{elem}
+				</form>
 			</div>
 		);
 	}

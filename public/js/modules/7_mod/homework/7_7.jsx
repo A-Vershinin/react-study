@@ -2,7 +2,6 @@
 Дан массив с работниками. У каждого работника есть имя, фамилия, зарплата. Выведите этих работников на экран в виде
 таблицы. Сделайте так, чтобы работников можно было посортировать по любой колонке этой таблицы.
 */
-// не доделал
 class App extends React.Component {
 	constructor() {
 		super();
@@ -15,42 +14,22 @@ class App extends React.Component {
 			]
 		}};
 
-	getInnerArr(colNum) {
-		let innerArray = this.state.users.map((item) => {
-			if (colNum === 0) {
-				return item.name;
+	sortGrid(arr, column) {
+		for (let i = 1; i < arr.length; i++) {
+			if (arr[i-1][column] > arr[i][column]) {
+				let temp = arr[i];
+				arr[i] = arr[i-1];
+				arr[i-1] = temp;
 			}
-			if (colNum === 1) {
-				return item.salary;
-			}
-		});
-		return innerArray;
-	}
-
-	sortGrid(arr, type) {
-		let compare;
-		switch (type) {
-			case 'number':
-				compare = (rowA, rowB) => {
-					return rowA - rowB;
-				};
-				break;
-			case 'string':
-				compare = (rowA, rowB) => {
-					return rowA.length > rowB.length;
-				};
-				break;
 		}
-		return arr.sort(compare);
+
+		return arr;
 	}
 
 	handleTableClick(event) {
-		const index = event.target.cellIndex;
-		const type = event.target.getAttribute('data-type');
+		const column = event.target.getAttribute('data-column');
 		if (event.target.tagName != "TH") return false;
-
-		let rowsArray = this.getInnerArr(index);
-		let arr = this.sortGrid(rowsArray, type);
+		let arr = this.sortGrid(this.state.users, column);
 
 		console.log(arr);
 		this.setState({users: arr});
@@ -65,13 +44,14 @@ class App extends React.Component {
 			)
 		});
 
+		// сделать такой же итем для th чтобы имена присваивались из стейта в дата атрибут
 		return (
 			<div className="container">
 				<table onClick={this.handleTableClick.bind(this)}>
 					<thead>
 					<tr style={{outline: "1px solid black"}}>
-						<th data-type="string" style={{display: "block", marginRight: "20px"}}>Имя</th>
-						<th data-type="number">Зарплата</th>
+						<th data-column="name" style={{display: "block", marginRight: "20px"}}>Имя</th>
+						<th data-column="salary">Зарплата</th>
 					</tr>
 					</thead>
 					<tbody>
