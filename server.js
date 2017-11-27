@@ -37,9 +37,9 @@ const server = http.createServer(function(request, response) {
       const css = fs.readFileSync("public/css/styles.css", "utf8");
       response.end(css);
       break;
-    case "/js/App.jsx":
+    case "/js/ReactApp.jsx":
       response.writeHead(200, {"Content-type" : "text/babel"});
-      const js = fs.readFileSync("public/js/App.jsx", "utf8");
+      const js = fs.readFileSync("public/js/ReactApp.jsx", "utf8");
       response.end(js);
       break;
     default:

@@ -51,7 +51,8 @@ class App extends React.Component {
 	render() {
 		const item = this.state.users.map((elem, index) => {
 			return (
-				<User index={index} key={index} name={elem.name} valueInput={elem.valueInput} valueChecked={elem.valueChecked}
+				<User index={index} key={index} name={elem.name} valueInput={elem.valueInput}
+				      valueChecked={elem.valueChecked}
 				      userClick={this.handleUserClick.bind(this)}
 				      inputChange={this.handleInputChange.bind(this)}
 				      inputBlur={this.handleInputBlur.bind(this)}
