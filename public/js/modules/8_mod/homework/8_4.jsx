@@ -99,10 +99,11 @@ class App extends React.Component {
 		}
 	}
 
-	deleteItem(index) {
-		this.state.products.splice(index, 1);
-		this.setState({products: this.state.products});
-	}
+  deleteItem(index) {
+    let products = [...this.state.products];
+    products.splice(index, 1);
+    this.setState({products: products});
+  }
 	handleCheckboxChange(index) {
 		this.state.products[index]['checked'] = !this.state.products[index]['checked'];
 		this.setState({products: this.state.products});
@@ -136,7 +137,13 @@ class App extends React.Component {
 		});
 
 		this.setState({products: products});
-		this.setState({valueName: "", valuePrice: "", valueQuantity: ""});
+    this.setState({
+      forms: {
+        valueName: "",
+        valuePrice: "",
+        valueQuantity: ""
+      }
+    });
 	};
 
 	render() {
